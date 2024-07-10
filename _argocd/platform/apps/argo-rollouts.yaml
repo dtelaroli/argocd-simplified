@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argo-rollouts
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/dtelaroli/argocd-simplified.git
+        revision: feature/initial
+        files:
+          - path: environments/**/platform/argo-rollouts/config.yaml
+  template:
+    metadata:
+      name: "argo-rollouts-{{ env }}"
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: platform
+      source:
+        repoURL: https://github.com/dtelaroli/argocd-simplified.git
+        path: teams/platform/argo-rollouts
+        targetRevision: feature/initial
+      destination:
+        name: "{{ clusterName }}"
+        namespace: argo-rollouts
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - FailOnSharedResource=true
+          - CreateNamespace=true
