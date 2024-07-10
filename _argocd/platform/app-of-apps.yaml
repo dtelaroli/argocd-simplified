@@ -12,7 +12,7 @@ spec:
   source:
     path: _argocd/platform/apps
     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-    targetRevision: feature/initial
+    targetRevision: HEAD
   syncPolicy:
     automated:
       selfHeal: true

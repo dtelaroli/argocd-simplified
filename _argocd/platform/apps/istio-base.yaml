@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: argo-rollouts
+  name: istio-base
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -20,21 +20,23 @@ spec:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
               revision: feature/initial
               files:
-                - path: "environments/{{.env}}/platform/argo-rollouts.values.yaml"
+                - path: "environments/{{.env}}/platform/istio-base.values.yaml"
   template:
     metadata:
-      name: "argo-rollouts-{{.env}}"
+      name: "istio-base-{{.env}}"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
       project: platform
       source:
-        repoURL: https://github.com/dtelaroli/argocd-simplified.git
-        path: teams/platform/argo-rollouts
-        targetRevision: "{{ .revision | default \"HEAD\" }}"
+        repoURL: https://istio-release.storage.googleapis.com/charts
+        chart: base 
+        targetRevision: "1.22.0"
+        helm:
+          version: v3
       destination:
         name: "{{ .name }}"
-        namespace: argo-rollouts
+        namespace: istio-system
       syncPolicy:
         automated:
           selfHeal: true
