@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: istio-d
+  name: test-api
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -20,23 +20,30 @@ spec:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
               revision: HEAD
               files:
-                - path: "environments/{{.env}}/platform/istio-d.values.yaml"
+                - path: "environments/{{.env}}/engineering/test-api.values.yaml"
   template:
     metadata:
-      name: "istio-d-{{.env}}"
+      name: "test-api-{{ .env }}"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: "platform-{{.env}}"
+      project: "engineering-{{ .env }}"
       source:
-        repoURL: https://istio-release.storage.googleapis.com/charts
-        chart: istiod 
-        targetRevision: "1.22.0"
+        repoURL: https://github.com/dtelaroli/argocd-simplified.git
+        path: teams/engineering/test-api
+        targetRevision: "{{ .revision | default \"HEAD\" }}"
         helm:
           version: v3
+          valueFiles:
+            - ../../../environments/{{ .env }}/global.values.yaml
+            - values.yaml
+            - ../../../environments/{{ .env }}/engineering/test-api.values.yaml
+          parameters:
+            - name: "canary.tag"
+              value: "latest"
       destination:
         name: "{{ .clusterName }}"
-        namespace: istio-system
+        namespace: "{{ .env }}"
       syncPolicy:
         automated:
           selfHeal: true

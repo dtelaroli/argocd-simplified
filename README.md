@@ -6,6 +6,80 @@ An argocd configuration boilerplate
 
 Este é um repositório que aplica o conceito de mono-repos e foi projetado para que todos o IaC do Kubernetes esteja centralizado aqui, porém isto não impede que os argo-applications escutem outros repositórios em casos específicos ou por opção do time.
 
+```md
+# This is just to get insight about the content, it might be outdated
+.
+├── LICENSE
+├── Makefile
+├── README.md
+├── _argocd
+│   ├── app-of-apps.yaml
+│   ├── app-project.yaml
+│   ├── kustomization.yaml
+│   └── teams
+│       ├── engineering
+│       │   ├── app-of-apps.yaml
+│       │   ├── app-project-dev.yaml
+│       │   ├── apps
+│       │   │   └── test-api.yaml
+│       │   └── kustomization.yaml
+│       ├── kustomization.yaml
+│       └── platform
+│           ├── app-of-apps.yaml
+│           ├── app-project-dev.yaml
+│           ├── app-project-shared.yaml
+│           ├── apps
+│           │   ├── argo-rollouts.yaml
+│           │   ├── argocd.yaml
+│           │   ├── istio-base.yaml
+│           │   └── istio-d.yaml
+│           └── kustomization.yaml
+├── charts
+│   └── canary
+│       ├── Chart.yaml
+│       ├── README.md
+│       ├── templates
+│       │   ├── argo-rollout.yaml
+│       │   ├── destination-rule.yaml
+│       │   ├── service.yaml
+│       │   └── virtual-service.yaml
+│       ├── values-lint.yaml
+│       ├── values.schema.json
+│       └── values.yaml
+├── docs
+│   ├── app-of-apps-argocd.png
+│   ├── app-of-apps-platform.png
+│   └── base-applications.png
+├── environments
+│   └── dev
+│       ├── engineering
+│       │   └── test-api.values.yaml
+│       ├── global.values.yaml
+│       └── platform
+│           ├── argo-rollouts.values.yaml
+│           ├── istio-base.values.yaml
+│           └── istio-d.values.yaml
+├── scripts
+│   └── bash
+│       ├── add-repo.sh
+│       └── update-pass.sh
+└── teams
+    ├── engineering
+    │   └── test-api
+    │       ├── Chart.yaml
+    │       └── values.yaml
+    └── platform
+        ├── argo-rollouts
+        │   └── kustomization.yaml
+        └── argocd
+            ├── kustomization.yaml
+            └── patches
+                ├── argocd-cm.yaml
+                ├── argocd-cmd-params-cm.yaml
+                ├── argocd-rbac-cm.yaml
+                └── argocd-server.yaml
+```
+
 ### ArgoCD metadata
 
 O ArgoCD é usado para configuração da sua própria estrutura de projetos e aplicações, para isto foi criada uma estrutura de projetos que precisa ser adicionada como pontapé inicial. Aqui temos o dilema do ovo e da galinha, onde para que o argo gerencie os apps de metadados eles precisa ser criados manualmente uma vez
@@ -20,7 +94,8 @@ _argocd
       apps
       # Este app-of-apps escuta a pasta apps
       app-of-apps.yaml
-      app-project.yaml
+      app-project-env.yaml
+      app-project-shared.yaml
       kustomization.yaml
     # Os times devem ser referenciados neste kustomization.yaml
     kustomization.yaml

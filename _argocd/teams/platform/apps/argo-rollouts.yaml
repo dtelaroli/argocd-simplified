@@ -27,7 +27,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: platform
+      project: "platform-{{.env}}"
       source:
         repoURL: https://github.com/dtelaroli/argocd-simplified.git
         path: teams/platform/argo-rollouts

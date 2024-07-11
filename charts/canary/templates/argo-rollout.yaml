@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ .Values.application }}
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      mydomain.com/app: {{ .Values.application }}
+  template:
+    metadata:
+      labels:
+        mydomain.com/app: {{ .Values.application }}
+        mydomain.com/tag: "{{ .Values.tag }}"
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      containers:
+        - image: "{{ .Values.registry }}{{- if not (empty .Values.registry) }}/{{- end }}{{ .Values.repository }}:{{ .Values.tag }}"
+          name: {{ .Values.application }}
+          ports:
+            - containerPort: {{ .Values.port }}
+              protocol: TCP
+  strategy:
+    canary:
+      stableMetadata:
+        labels:
+          argo-rollouts/version: stable
+      canaryMetadata:
+        labels:
+          argo-rollouts/version: canary
+      steps:
+        - setHeaderRoute:
+            name: header-version
+            match:
+              - headerName: x-version
+                headerValue:
+                  exact: "{{ .Values.tag }}"
+        - setWeight: 10
+        - pause:
+            duration: 30s
+        - setWeight: 50
+        - pause:
+            duration: 30s
+        - setWeight: 100
+        - pause:
+            duration: 10s
+      trafficRouting:
+        managedRoutes:
+          - name: header-version
+        istio:
+          virtualService:
+            name: {{ .Values.application }}
+            routes:
+              - primary
+          destinationRule:
+            name: {{ .Values.application }}
+            stableSubsetName: stable
+            canarySubsetName: canary
