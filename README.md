@@ -31,6 +31,14 @@ _argocd
   kustomization.yaml
 ```
 
+#### Visão geral do argo após configurado o domínio de plataforma
+
+![base-applications](./docs/base-applications.png)
+
+#### Exemplo de como fica o app-of-apps-platform
+
+![app-of-apps-platform](./docs/app-of-apps-platform.png)
+
 ### Scripts
 
 Pasta que abriga scripts utilitários a configuração do ArgoCD e para os projetos aqui contidos
@@ -78,7 +86,7 @@ Na raiz deste projeto temos um `Makefile` que pode ser usado para configurar ata
 Como o ArgoCD está sendo utilizado para gerenciar seus próprios recursos, é necessário uma configuração de partida, instalando o ArgoCD e o app-of-apps responsável por criar toda a árvore de aplicações, que são outros app-of-apps dividido por times.
 Na prática, o comando de init vai aplicar manualmente a instalação do argocd que é gerenciada por um app no próprio argocd, para facilitar a manutenção e upgrade dele mesmo e após instalado é criado o app-of-apps de nome app-of-apps-argocd.
 
-![app-of-apps](./docs/app-of-apps.png)
+![app-of-apps-argocd](./docs/app-of-apps-argocd.png)
 
 Está previsto que o argo estará instalado no cluster de desenvolvimento, neste caso, selecione o contexto do cluster e execute o comando abaixo para fazer a configuração do argo e do Application.
 
