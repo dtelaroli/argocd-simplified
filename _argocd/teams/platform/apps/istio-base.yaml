@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: istio-d
+  name: istio-base
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -13,29 +13,29 @@ spec:
         generators:
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: feature/initial
+              revision: HEAD
               files:
                 - path: "environments/**/global.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: feature/initial
+              revision: HEAD
               files:
-                - path: "environments/{{.env}}/platform/istio-d.values.yaml"
+                - path: "environments/{{.env}}/platform/istio-base.values.yaml"
   template:
     metadata:
-      name: "istio-d-{{.env}}"
+      name: "istio-base-{{.env}}"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
       project: platform
       source:
         repoURL: https://istio-release.storage.googleapis.com/charts
-        chart: istiod 
+        chart: base 
         targetRevision: "1.22.0"
         helm:
           version: v3
       destination:
-        name: "{{ .name }}"
+        name: "{{ .clusterName }}"
         namespace: istio-system
       syncPolicy:
         automated:
