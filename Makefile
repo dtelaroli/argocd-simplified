@@ -27,7 +27,7 @@ rancher_context: ## Initial installation of argocd and the app-of-apps
 
 .PHONY: add_repo
 add_repo:
-	@ARGO_SERVER="http://localhost:8888" ARGO_USER=admin REPO_URL=${REPO_URL} GIT_TOKEN=${GIT_TOKEN} bash ./scripts/bash/add-repo.sh
+	@bash ./scripts/bash/add-repo.sh
 
 .PHONY: forward
 forward:

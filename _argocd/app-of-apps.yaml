@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: argocd
+  destination:
+    name: in-cluster
+    namespace: argocd
+  source:
+    path: _argocd/teams
+    repoURL: https://github.com/dtelaroli/argocd-simplified.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: false
+    syncOptions:
+      - FailOnSharedResource=true
+      - CreateNamespace=true
