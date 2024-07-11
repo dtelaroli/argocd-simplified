@@ -13,12 +13,12 @@ spec:
         generators:
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: feature/initial
+              revision: HEAD
               files:
                 - path: "environments/**/global.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: feature/initial
+              revision: HEAD
               files:
                 - path: "environments/{{.env}}/platform/argo-rollouts.values.yaml"
   template:

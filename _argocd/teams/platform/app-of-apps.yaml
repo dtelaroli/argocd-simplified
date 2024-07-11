@@ -10,7 +10,7 @@ spec:
     name: in-cluster
     namespace: argocd
   source:
-    path: _argocd/platform/apps
+    path: _argocd/teams/platform/apps
     repoURL: https://github.com/dtelaroli/argocd-simplified.git
     targetRevision: HEAD
   syncPolicy:
