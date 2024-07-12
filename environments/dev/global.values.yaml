@@ -1,7 +1,5 @@
 env: dev
 clusterName: in-cluster
-revision: HEAD
-istioVersion:
 
 canary:
   env: dev

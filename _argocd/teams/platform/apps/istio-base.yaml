@@ -11,11 +11,18 @@ spec:
   generators:
     - matrix:
         generators:
-          - git:
-              repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: HEAD
-              files:
-                - path: "environments/**/global.values.yaml"
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/dtelaroli/argocd-simplified.git
+                    revision: HEAD
+                    files:
+                      - path: "environments/global.values.yaml"
+                - git:
+                    repoURL: https://github.com/dtelaroli/argocd-simplified.git
+                    revision: HEAD
+                    files:
+                      - path: "environments/**/global.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
               revision: HEAD
