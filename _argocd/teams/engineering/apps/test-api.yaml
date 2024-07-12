@@ -43,8 +43,16 @@ spec:
         namespace: "{{ .env }}"
       syncPolicy:
         automated:
-          selfHeal: true
+          selfHeal: false
           prune: false
         syncOptions:
           - FailOnSharedResource=true
           - CreateNamespace=true
+          - RespectIgnoreDifferences=true
+      ignoreDifferences:
+        - group: argoproj.io
+          kind: Application
+          managedFieldsManagers:
+            - kube-controller-manager
+          jsonPointers:
+            - /spec/template/spec/source/helm/parameters

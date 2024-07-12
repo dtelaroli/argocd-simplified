@@ -15,7 +15,7 @@ spec:
     targetRevision: '{{ .revision | default "HEAD" }}'
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
       prune: true
     syncOptions:
       - FailOnSharedResource=true

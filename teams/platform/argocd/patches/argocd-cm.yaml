@@ -18,4 +18,5 @@ data:
       - '.webhooks[]?.failurePolicy'
     jsonPointers:
       - /spec/replicas
+      - /spec/source/helm/parameters
       - /spec/template/spec/source/helm/parameters

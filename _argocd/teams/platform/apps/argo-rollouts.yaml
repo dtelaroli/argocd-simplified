@@ -37,7 +37,7 @@ spec:
         namespace: argo-rollouts
       syncPolicy:
         automated:
-          selfHeal: true
+          selfHeal: false
           prune: false
         syncOptions:
           - FailOnSharedResource=true

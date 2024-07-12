@@ -3,7 +3,7 @@ kind: Rollout
 metadata:
   name: {{ .Values.application }}
 spec:
-  replicas: 3
+  replicas: {{ .Values.replicas | default 2 }}
   revisionHistoryLimit: 5
   selector:
     matchLabels:
@@ -39,13 +39,14 @@ spec:
                   exact: "{{ .Values.tag }}"
         - setWeight: 10
         - pause:
-            duration: 30s
-        - setWeight: 50
+            duration: 10m
+        - setWeight: 40
         - pause:
-            duration: 30s
+            duration: 5m
+        - setWeight: 70
+        - pause:
+            duration: 5m
         - setWeight: 100
-        - pause:
-            duration: 10s
       trafficRouting:
         managedRoutes:
           - name: header-version

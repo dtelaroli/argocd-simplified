@@ -15,7 +15,7 @@ spec:
     targetRevision: HEAD
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
       prune: false
     syncOptions:
       - FailOnSharedResource=true
