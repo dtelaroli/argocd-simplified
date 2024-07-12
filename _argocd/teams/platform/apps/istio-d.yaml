@@ -38,7 +38,7 @@ spec:
       source:
         repoURL: https://istio-release.storage.googleapis.com/charts
         chart: istiod 
-        targetRevision: '{{ .istioVersion | default "1.22.0" }}'
+        targetRevision: '{{ .istioVersion }}'
         helm:
           version: v3
       destination:
