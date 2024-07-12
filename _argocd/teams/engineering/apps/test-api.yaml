@@ -42,7 +42,8 @@ spec:
         helm:
           version: v3
           valueFiles:
-            - ../../../environments/{{ .env }}/global.values.yaml
+            - ../../../environments/global.values.yaml
+            - ../../../environments/{{ .env }}/env.values.yaml
             - values.yaml
             - ../../../environments/{{ .env }}/engineering/test-api.values.yaml
       destination:
