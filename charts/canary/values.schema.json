@@ -4,7 +4,9 @@
       "env": {
          "type": "string",
          "enum": [
-            "dev"
+            "dev",
+            "test",
+            "prod"
          ]
       },
       "application": {
@@ -13,10 +15,16 @@
       "namespace": {
          "type": "string"
       },
+      "registry": {
+         "type": "string"
+      },
       "repository": {
          "type": "string"
       },
       "port": {
+         "type": "integer"
+      },
+      "replicas": {
          "type": "integer"
       },
       "tag": {

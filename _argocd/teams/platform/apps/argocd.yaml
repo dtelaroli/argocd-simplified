@@ -12,10 +12,10 @@ spec:
   source:
     path: teams/platform/argocd
     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-    targetRevision: HEAD
+    targetRevision: '{{ .revision | default "HEAD" }}'
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: false
       prune: true
     syncOptions:
       - FailOnSharedResource=true

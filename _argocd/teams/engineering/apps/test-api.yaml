@@ -31,23 +31,28 @@ spec:
       source:
         repoURL: https://github.com/dtelaroli/argocd-simplified.git
         path: teams/engineering/test-api
-        targetRevision: "{{ .revision | default \"HEAD\" }}"
+        targetRevision: '{{ .revision | default "HEAD" }}'
         helm:
           version: v3
           valueFiles:
             - ../../../environments/{{ .env }}/global.values.yaml
             - values.yaml
             - ../../../environments/{{ .env }}/engineering/test-api.values.yaml
-          parameters:
-            - name: "canary.tag"
-              value: "latest"
       destination:
         name: "{{ .clusterName }}"
         namespace: "{{ .env }}"
       syncPolicy:
         automated:
-          selfHeal: true
+          selfHeal: false
           prune: false
         syncOptions:
           - FailOnSharedResource=true
           - CreateNamespace=true
+          - RespectIgnoreDifferences=true
+      ignoreDifferences:
+        - group: argoproj.io
+          kind: Application
+          managedFieldsManagers:
+            - kube-controller-manager
+          jsonPointers:
+            - /spec/template/spec/source/helm/parameters
