@@ -1,0 +1,7 @@
+env: dev
+application: foo
+registry: https://foo.com
+repository: foo
+namespace: foo
+tag: latest
+port: 8080

@@ -16,3 +16,6 @@ data:
       - kube-controller-manager
     jqPathExpressions:
       - '.webhooks[]?.failurePolicy'
+    jsonPointers:
+      - /spec/replicas
+      - /spec/template/spec/source/helm/parameters

@@ -27,7 +27,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: platform
+      project: "platform-{{.env}}"
       source:
         repoURL: https://istio-release.storage.googleapis.com/charts
         chart: base 
