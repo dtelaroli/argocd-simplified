@@ -51,14 +51,15 @@ Este é um repositório que aplica o conceito de mono-repos e foi projetado para
 │   ├── app-of-apps-platform.png
 │   └── base-applications.png
 ├── environments
-│   └── dev
-│       ├── engineering
-│       │   └── test-api.values.yaml
-│       ├── global.values.yaml
-│       └── platform
-│           ├── argo-rollouts.values.yaml
-│           ├── istio-base.values.yaml
-│           └── istio-d.values.yaml
+│   ├── dev
+│   │   ├── engineering
+│   │   │   └── test-api.values.yaml
+│   │   ├── env.values.yaml
+│   │   └── platform
+│   │       ├── argo-rollouts.values.yaml
+│   │       ├── istio-base.values.yaml
+│   │       └── istio-d.values.yaml
+│   └── global.values.yaml
 ├── scripts
 │   └── bash
 │       ├── add-repo.sh
