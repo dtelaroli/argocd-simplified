@@ -1,4 +1,4 @@
 canary:
-  targetRevision: HEAD
-  shortCommit: de9d5d0
-  tag: 0.0.15
+  targetRevision: feature/engineering
+  shortCommit: 
+  tag: PR-48
