@@ -2,6 +2,7 @@ name: Deploy PR
 on:
   issue_comment:
     types: [created]
+permissions: write-all
 jobs:
   build:
     name: deploy pull-request
