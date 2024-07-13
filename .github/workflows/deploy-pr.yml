@@ -16,10 +16,9 @@ jobs:
     - name: Set env
       env:
         NUMBER: ${{ github.event.issue.number }}
-        BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
       run: |
         echo "TAG_NAME=PR-${NUMBER}" >> ${GITHUB_ENV}
-        echo "BRANCH_NAME=${BRANCH_NAME}" >> ${GITHUB_ENV}
+        echo "BRANCH_NAME=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
     - name: Create manifest changes
       run: |
@@ -30,3 +29,4 @@ jobs:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
         branch: ${{ env.BRANCH_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
