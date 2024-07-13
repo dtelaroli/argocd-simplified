@@ -16,12 +16,14 @@ jobs:
     - name: Set env
       env:
         NUMBER: ${{ github.event.issue.number }}
+        REF: ${{ github.event.pull_request.head.ref }}
       run: |
         echo "TAG_NAME=PR-${NUMBER}" >> ${GITHUB_ENV}
         echo "BRANCH_NAME=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
     - name: Create manifest changes
       run: |
+        env
         ./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}
     - name: Commit & Push changes
       uses: actions-js/push@master
