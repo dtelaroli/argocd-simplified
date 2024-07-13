@@ -29,4 +29,3 @@ jobs:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
         branch: ${{ env.BRANCH_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
