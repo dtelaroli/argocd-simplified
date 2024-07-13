@@ -3,8 +3,8 @@ on:
   issue_comment:
     types: [created]
 jobs:
-  deploy:
-    name: change recommit and push changes
+  build:
+    name: deploy pull-request
     if: ${{ github.event.issue.pull_request }} && ${{ contains(github.event.comment.body, 'actions[deploy]') }}
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +19,7 @@ jobs:
         export BRANCH_NAME=${GITHUB_REF#refs/*/}
         export TAG_NAME=PR-${NUMBER}
 
-        bash ./scripts/bash/set-release ${BRANCH_NAME} ${TAG_NAME} ./environments/dev/engineering/test-api.values.yam
+        bash ./scripts/bash/set-release.sh ${BRANCH_NAME} ${TAG_NAME} ./environments/dev/engineering/test-api.values.yam
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
