@@ -1,0 +1,26 @@
+name: Deploy PR
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  deploy:
+    name: change recommit and push changes
+    if: ${{ github.event.issue.pull_request }} && ${{ contains(github.event.comment.body, 'actions[deploy]') }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        fetch-depth: 0             # otherwise, you will fail to push refs to dest repo
+    - name: Create manifest changes
+      env:
+        NUMBER: ${{ github.event.issue.number }}
+      run: |
+        export BRANCH_NAME=${GITHUB_REF#refs/*/}
+        export TAG_NAME=PR-${NUMBER}
+
+        bash ./scripts/bash/set-release ${BRANCH_NAME} ${TAG_NAME} ./environments/dev/engineering/test-api.values.yam
+    - name: Commit & Push changes
+      uses: actions-js/push@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
