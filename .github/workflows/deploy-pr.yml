@@ -5,22 +5,29 @@ on:
   workflow_dispatch:
 permissions: write-all
 jobs:
-  build:
+  pr_comment:
     name: deploy pull-request
     if: ${{ github.event.issue.pull_request }} && ${{ contains(github.event.comment.body, 'actions[deploy]') }}
     runs-on: ubuntu-latest
     steps:
+    - name: Get Branch name
+      id: branchName
+      env:
+        PR_COMMENT: ${{ github.event.comment.body }}
+      run: |
+        echo ::set-output name=branch::$(echo $PR_COMMENT | cut -d "[" -f2 | cut -d "]" -f1)
     - uses: actions/checkout@master
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0             # otherwise, you will fail to push refs to dest repo
+        ref: ${{ steps.branchName.outputs.branch }}
     - name: Set env
       env:
         NUMBER: ${{ github.event.issue.number }}
-        REF: ${{ github.event.pull_request.head.ref }}
+        BRANCH_NAME: ${{ steps.branchName.outputs.branch }}
       run: |
         echo "TAG_NAME=PR-${NUMBER}" >> ${GITHUB_ENV}
-        echo "BRANCH_NAME=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+        echo "BRANCH_NAME=${BRANCH_NAME}" >> ${GITHUB_ENV}
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
     - name: Create manifest changes
       run: |
@@ -32,4 +39,3 @@ jobs:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
         branch: ${{ env.BRANCH_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
