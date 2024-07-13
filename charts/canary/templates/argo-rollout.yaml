@@ -12,8 +12,8 @@ spec:
     metadata:
       labels:
         mydomain.com/app: {{ .Values.application }}
-        mydomain.com/target-revision: "{{ .Values.canary.targetRevision }}"
-        mydomain.com/short-commit: "{{ .Values.canary.shortCommit }}"
+        mydomain.com/target-revision: "{{ .Values.targetRevision }}"
+        mydomain.com/short-commit: "{{ .Values.shortCommit }}"
         mydomain.com/tag: "{{ .Values.tag }}"
         sidecar.istio.io/inject: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
@@ -26,11 +26,11 @@ spec:
               protocol: TCP
           env:
             - name: SERVICE_TARGET_REVISION
-              value: {{ .Values.canary.targetRevision }}
+              value: {{ .Values.targetRevision }}
             - name: SERVICE_SHORT_COMMIT
-              value: {{ .Values.canary.shortCommit }}
+              value: {{ .Values.shortCommit }}
             - name: SERVICE_TAG
-              value: {{ .Values.canary.tag }}
+              value: {{ .Values.tag }}
   strategy:
     canary:
       stableMetadata:
