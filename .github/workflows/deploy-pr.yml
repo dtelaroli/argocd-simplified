@@ -13,14 +13,15 @@ jobs:
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0             # otherwise, you will fail to push refs to dest repo
-    - name: Create manifest changes
+    - name: Set env
       env:
         NUMBER: ${{ github.event.issue.number }}
       run: |
         echo "TAG_NAME=PR-${NUMBER}" >> ${GITHUB_ENV}
         echo "BRANCH_NAME=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
-        
+    - name: Create manifest changes
+      run: |
         echo "./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}"
         ./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}
     - name: Commit & Push changes
