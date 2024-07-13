@@ -2,6 +2,7 @@ name: Deploy PR
 on:
   issue_comment:
     types: [created]
+  workflow_dispatch:
 permissions: write-all
 jobs:
   build:
@@ -31,3 +32,4 @@ jobs:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
         branch: ${{ env.BRANCH_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
