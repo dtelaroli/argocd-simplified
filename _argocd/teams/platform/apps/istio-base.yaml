@@ -17,12 +17,12 @@ spec:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
                     revision: HEAD
                     files:
-                      - path: "environments/**/platform/istio-base.values.yaml"
+                      - path: "environments/**/env.values.yaml"
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
                     revision: HEAD
                     files:
-                      - path: "environments/{{.env}}/env.values.yaml"
+                      - path: "environments/**/platform/istio-base.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
               revision: HEAD
