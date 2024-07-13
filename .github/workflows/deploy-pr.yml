@@ -32,9 +32,10 @@ jobs:
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
     - name: Create manifest changes
       run: |
-        ./scripts/bash/set-release.sh "${{ env.BRANCH_NAME }}" ${{ env.TAG_NAME }} ${{ env.MANIFEST }}
+        ./scripts/bash/set-release.sh "${{ env.BRANCH_NAME }}" "${{ env.TAG_NAME }}" "${{ env.MANIFEST }}"
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
