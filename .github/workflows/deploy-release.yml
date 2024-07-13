@@ -22,4 +22,5 @@ jobs:
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
+        message: 'deploy release: ${GITHUB_REF#refs/*/}'
         github_token: ${{ secrets.GITHUB_TOKEN }}
