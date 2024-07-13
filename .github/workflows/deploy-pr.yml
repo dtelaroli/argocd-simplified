@@ -22,7 +22,6 @@ jobs:
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
     - name: Create manifest changes
       run: |
-        echo "./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}"
         ./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}
     - name: Commit & Push changes
       uses: actions-js/push@master
