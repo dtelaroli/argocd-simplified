@@ -29,6 +29,12 @@
       },
       "tag": {
          "type": "string"
+      },
+      "shortCommit": {
+         "type": "string"
+      },
+      "targetRevision": {
+         "type": "string"
       }
    },
    "required": [
@@ -36,7 +42,9 @@
       "repository",
       "namespace",
       "port",
-      "tag"
+      "tag",
+      "shortCommit",
+      "targetRevision"
    ],
    "title": "Values",
    "type": "object"

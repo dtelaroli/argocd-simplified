@@ -16,11 +16,12 @@ jobs:
         fetch-depth: 0             # otherwise, you will fail to push refs to dest repo
     - name: Set env
       run: |
+        echo "SHORT_COMMIT=${git rev-parse --short HEAD}" >> ${GITHUB_ENV}
         echo "RELEASE_VERSION=${GITHUB_REF_NAME}" >> ${GITHUB_ENV}
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
     - name: Create manifest changes
       run: |
-        ./scripts/bash/set-release.sh ${{ env.RELEASE_VERSION }} ${{ env.RELEASE_VERSION }} ${{ env.MANIFEST }}
+        ./scripts/bash/set-release.sh ${{ env.RELEASE_VERSION }} "${{ env.SHORT_COMMIT }}" ${{ env.RELEASE_VERSION }} ${{ env.MANIFEST }}
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:

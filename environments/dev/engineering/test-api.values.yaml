@@ -1,3 +1,4 @@
 canary:
-  targetRevision: feature/engineering
-  tag: PR-43
+  targetRevision: feature/foo
+  shortCommit: abc1234
+  tag: pr-123

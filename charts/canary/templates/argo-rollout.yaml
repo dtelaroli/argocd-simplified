@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         mydomain.com/app: {{ .Values.application }}
+        mydomain.com/target-revision: "{{ .Values.targetRevision }}"
+        mydomain.com/short-commit: "{{ .Values.shortCommit }}"
         mydomain.com/tag: "{{ .Values.tag }}"
         sidecar.istio.io/inject: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
@@ -22,6 +24,13 @@ spec:
           ports:
             - containerPort: {{ .Values.port }}
               protocol: TCP
+          env:
+            - name: SERVICE_TARGET_REVISION
+              value: {{ .Values.targetRevision }}
+            - name: SERVICE_SHORT_COMMIT
+              value: {{ .Values.shortCommit }}
+            - name: SERVICE_TAG
+              value: {{ .Values.targetRevision }}
   strategy:
     canary:
       stableMetadata:
