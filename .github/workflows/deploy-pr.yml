@@ -38,4 +38,3 @@ jobs:
       with:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
