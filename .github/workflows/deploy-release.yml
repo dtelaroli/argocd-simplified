@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 permissions: write-all
 jobs:
-  build:
+  release:
     name: deploy release
     runs-on: ubuntu-latest
     steps:
