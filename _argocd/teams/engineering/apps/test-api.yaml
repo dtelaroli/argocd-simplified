@@ -38,14 +38,14 @@ spec:
       source:
         repoURL: https://github.com/dtelaroli/argocd-simplified.git
         path: teams/engineering/test-api
-        targetRevision: '{{ .revision | default "HEAD" }}'
+        targetRevision: '{{ .canary.targetRevision }}'
         helm:
           version: v3
           valueFiles:
             - ../../../environments/global.values.yaml
             - ../../../environments/{{ .env }}/env.values.yaml
             - values.yaml
-            - ../../../environments/{{ .env }}/engineering/test-api.values.yaml
+            - ../../../environments/{{ .env }}/engineering/test-api.values.yaml          
       destination:
         name: "{{ .clusterName }}"
         namespace: "{{ .env }}"
