@@ -4,4 +4,6 @@ registry: https://foo.com
 repository: foo
 namespace: foo
 tag: latest
+shortCommit: abcd123
+targetRevision: feature/foo
 port: 8080

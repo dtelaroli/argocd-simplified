@@ -15,19 +15,19 @@ spec:
               generators:
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: HEAD
-                    files:
-                      - path: "environments/global.values.yaml"
-                - git:
-                    repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: HEAD
+                    revision: feature/engineering
                     files:
                       - path: "environments/**/env.values.yaml"
+                - git:
+                    repoURL: https://github.com/dtelaroli/argocd-simplified.git
+                    revision: feature/engineering
+                    files:
+                      - path: "environments/**/engineering/test-api.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: HEAD
+              revision: feature/engineering
               files:
-                - path: "environments/{{.env}}/engineering/test-api.values.yaml"
+                - path: "environments/global.values.yaml"
   template:
     metadata:
       name: "test-api-{{ .env }}"
