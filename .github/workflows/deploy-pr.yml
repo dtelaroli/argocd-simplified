@@ -17,9 +17,9 @@ jobs:
         PR_NO: ${{ github.event.issue.number }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        export BRANCH_NAME=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
-        echo ::set-output name=branch::${BRANCH_NAME}
+        export =$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
         echo ::set-output name=short_commit::$(git rev-parse --short ${BRANCH_NAME})
+        echo ::set-output name=branch::${BRANCH_NAME}
     - uses: actions/checkout@master
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
