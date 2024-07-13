@@ -21,6 +21,7 @@ jobs:
         echo "BRANCH_NAME=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
         echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
         
+        echo "./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}"
         ./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}
     - name: Commit & Push changes
       uses: actions-js/push@master
