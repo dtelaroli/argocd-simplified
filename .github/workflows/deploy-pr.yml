@@ -23,6 +23,7 @@ jobs:
       run: |
         export BRANCH_NAME=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
         git fetch origin ${BRANCH_NAME}:${BRANCH_NAME}
+        
         export SHORT_COMMIT=$(git rev-parse --short origin/${BRANCH_NAME})
         
         echo "TAG_NAME=PR-${NUMBER}" >> ${GITHUB_ENV}
