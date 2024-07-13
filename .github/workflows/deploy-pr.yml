@@ -19,7 +19,7 @@ jobs:
         export BRANCH_NAME=${GITHUB_REF#refs/*/}
         export TAG_NAME=PR-${NUMBER}
 
-        bash ./scripts/bash/set-release.sh ${BRANCH_NAME} ${TAG_NAME} ./environments/dev/engineering/test-api.values.yam
+        bash ./scripts/bash/set-release.sh ${BRANCH_NAME} ${TAG_NAME} ./environments/dev/engineering/test-api.values.yaml
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
