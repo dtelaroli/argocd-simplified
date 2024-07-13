@@ -16,10 +16,11 @@ jobs:
         fetch-depth: 0             # otherwise, you will fail to push refs to dest repo
     - name: Create manifest changes
       run: |
+        echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
         export MANIFEST=./environments/dev/engineering/test-api.values.yaml
-        ./scripts/bash/set-release.sh ${GITHUB_REF_NAME} ${GITHUB_REF_NAME} ${MANIFEST}
+        ./scripts/bash/set-release.sh ${{ env.GITHUB_REF_NAME }} ${{ env.GITHUB_REF_NAME }} ${MANIFEST}
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
-        message: 'deploy release: ${{GITHUB_REF_NAME}}'
+        message: 'deploy release: ${{ env.RELEASE_VERSION }}'
         github_token: ${{ secrets.GITHUB_TOKEN }}

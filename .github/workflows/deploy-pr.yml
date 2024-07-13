@@ -17,13 +17,14 @@ jobs:
       env:
         NUMBER: ${{ github.event.issue.number }}
       run: |
-        export TAG_NAME=PR-${NUMBER}
-        export MANIFEST=./environments/dev/engineering/test-api.values.yaml
-        cat ${MANIFEST}
-        ./scripts/bash/set-release.sh ${GITHUB_HEAD_REF} ${TAG_NAME} ${MANIFEST}
+        echo "TAG_NAME=PR-${NUMBER}" >> ${GITHUB_ENV}
+        echo "BRANCH_NAME=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+        echo "MANIFEST=./environments/dev/engineering/test-api.values.yaml" >> ${GITHUB_ENV}
+        
+        ./scripts/bash/set-release.sh ${{ env.BRANCH_NAME }} ${{ env.TAG_NAME }} ${{ env.MANIFEST }}
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
-        branch: ${{GITHUB_HEAD_REF}}
+        branch: ${{ env.BRANCH_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
