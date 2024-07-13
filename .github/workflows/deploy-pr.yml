@@ -22,7 +22,6 @@ jobs:
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0             # otherwise, you will fail to push refs to dest repo
-        ref: ${{ steps.branchName.outputs.branch }}
     - name: Set env
       env:
         NUMBER: ${{ github.event.issue.number }}
@@ -39,6 +38,4 @@ jobs:
       uses: actions-js/push@master
       with:
         message: 'deploy pull-request: #${{ github.event.issue.number }}'
-        branch: ${{ env.BRANCH_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
