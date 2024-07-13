@@ -1,3 +1,3 @@
 canary:
-  targetRevision: 0.0.5
-  tag: 0.0.5
+  targetRevision: main
+  tag: PR-25
