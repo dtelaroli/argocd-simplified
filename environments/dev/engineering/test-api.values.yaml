@@ -1,4 +1,4 @@
 canary:
   targetRevision: feature/engineering
-  shortCommit: 
-  tag: PR-50
+  shortCommit: df70c64
+  tag: PR-52
