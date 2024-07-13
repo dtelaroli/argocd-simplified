@@ -10,26 +10,21 @@ jobs:
     if: ${{ github.event.issue.pull_request }} && ${{ contains(github.event.comment.body, 'actions[deploy]') }}
     runs-on: ubuntu-latest
     steps:
-    - name: Get Branch name
-      id: branchName
-      env:
-        REPO: ${{ github.repository }}
-        PR_NO: ${{ github.event.issue.number }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        export BRANCH_NAME=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
-        echo ::set-output name=short_commit::$(git rev-parse --short ${BRANCH_NAME})
-        echo ::set-output name=branch::${BRANCH_NAME}
     - uses: actions/checkout@master
       with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
         fetch-depth: 0             # otherwise, you will fail to push refs to dest repo
     - name: Set env
       env:
+        REPO: ${{ github.repository }}
+        PR_NO: ${{ github.event.issue.number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NUMBER: ${{ github.event.issue.number }}
         BRANCH_NAME: ${{ steps.branchName.outputs.branch }}
         SHORT_COMMIT: ${{ steps.branchName.outputs.short_commit }}
       run: |
+        export BRANCH_NAME=$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
+        export SHORT_COMMIT=$(git rev-parse --short ${BRANCH_NAME})
         echo "TAG_NAME=PR-${NUMBER}" >> ${GITHUB_ENV}
         echo "BRANCH_NAME=${BRANCH_NAME}" >> ${GITHUB_ENV}
         echo "SHORT_COMMIT=${SHORT_COMMIT}" >> ${GITHUB_ENV}
