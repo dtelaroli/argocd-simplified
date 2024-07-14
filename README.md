@@ -63,6 +63,7 @@ Este é um repositório que aplica o conceito de mono-repos e foi projetado para
 ├── scripts
 │   └── bash
 │       ├── add-repo.sh
+│       ├── set-release.sh
 │       └── update-pass.sh
 └── teams
     ├── engineering
@@ -123,6 +124,30 @@ Pasta que abriga scripts utilitários a configuração do ArgoCD e para os proje
 scripts
   bash
 ```
+
+### Pipelines
+
+A pasta .github/workflows abriga os pipelines responsáveis pelo deploy.
+
+#### Feature-branch deployment
+
+O deploy de feature-branch é configurado no `deploy-pr.yml`.
+O processo inicia com um pull-request aberto e enviando uma mensagem com o texto abaixo:
+
+```
+actions[deploy]
+```
+
+O pipeline vai alterar os manifestos do arquivo yaml que configura o application do argocd. Após o argocd reconhecer a mudança e fazer o sync, o argo-rollouts entra em ação criando um novo rollout, que é um novo replicaset com pods em canary/blue-green para testes, antes de promover por completo a versão.
+
+O deploy de feature-branch configura a revision do argocd para a branch do PR e a tag do serviço para a tag da imagem gerada no processo de CI, com o padrão: `PR-123`.
+
+#### Release deployment
+
+O deploy de release é configurado no `deploy-release.yml`.
+O processo inicia com o lançamento de uma nova release, no repositório.
+
+O processo de deploy é o mesmo, porém a revision configurada no argocd será `HEAD` e a tag da imagem gerada no processo de CI, com o padrão semver: `1.1.1`.
 
 ### Configuração de ambientes
 
