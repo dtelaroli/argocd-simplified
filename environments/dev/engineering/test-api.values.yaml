@@ -1,4 +1,4 @@
 canary:
   targetRevision: HEAD
   shortCommit: 152afd0
-  tag: 1.5.0
+  tag: 1.7.0
