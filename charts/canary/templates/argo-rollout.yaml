@@ -10,10 +10,11 @@ spec:
       mydomain.com/app: {{ .Values.application }}
   template:
     metadata:
-      labels:
-        mydomain.com/app: {{ .Values.application }}
+      annotations:
         mydomain.com/target-revision: "{{ .Values.targetRevision }}"
         mydomain.com/short-commit: "{{ .Values.shortCommit }}"
+      labels:
+        mydomain.com/app: {{ .Values.application }}
         mydomain.com/tag: "{{ .Values.tag }}"
         sidecar.istio.io/inject: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
