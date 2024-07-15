@@ -14,11 +14,50 @@ pr:
 pool:
   vmImage: ubuntu-latest
 
+
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- checkout: self
+  persistCredentials: true
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    env
+    ls -lha
+
+    git config --global user.email "service@ackcloud.com"
+    git config --global user.name "service"
+    git fetch origin ${BRANCH_NAME}:${BRANCH_NAME}
+    export SHORT_COMMIT=$(git rev-parse --short ${BRANCH_NAME})
+    export MANIFEST=./environments/dev/engineering/test-api.values.yaml
+
+    git checkout ${BRANCH_NAME}
+
+    echo "./scripts/bash/set-release.sh ${BRANCH_NAME} ${SHORT_COMMIT} ${BUILD_ID} ${MANIFEST}"
+    ./scripts/bash/set-release.sh ${BRANCH_NAME} ${SHORT_COMMIT} ${BUILD_ID} ${MANIFEST}
+
+    git --no-pager diff
+    git add --all
+    git status
+    git commit -m "[skip ci]: update reference to ${BRANCH_NAME} ${SHORT_COMMIT} ${BUILD_ID} ${MANIFEST}"
+    git push origin main
+
+  workingDirectory: argocd-simplified
+  displayName: 'Change manifest'
+
+- script: |
+    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+    rm argocd-linux-amd64
+
+    argocd app sync ${APP_NAME} --server ${ARGOCD_SERVER} --auth-token ${ARGOCD_TOKEN} --grpc-web --prune
+    argocd app wait ${APP_NAME} --server ${ARGOCD_SERVER} --auth-token ${ARGOCD_TOKEN} --grpc-web --operation
+
+  displayName: 'Sync ArgoCD'
+
+- checkout: self
+  clean: true
+
+variables:
+  ARGOCD_SERVER: localhost:8888
+  APP_NAME: test-api-dev
+  BRANCH_NAME: $[replace(variables['Build.SourceBranch'], 'refs/heads/', '')]
+  BUILD_ID: $[variables['Build.BuildNumber']]
