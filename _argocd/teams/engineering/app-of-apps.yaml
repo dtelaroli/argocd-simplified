@@ -12,7 +12,7 @@ spec:
   source:
     path: _argocd/teams/engineering/apps
     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-    targetRevision: feature/mil
+    targetRevision: HEAD
   syncPolicy:
     automated:
       selfHeal: false

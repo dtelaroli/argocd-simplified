@@ -1,5 +1,5 @@
 revisions: 
-  argoRollouts: feature/mil
+  argoRollouts: HEAD
   istio: 1.22.0
 
 

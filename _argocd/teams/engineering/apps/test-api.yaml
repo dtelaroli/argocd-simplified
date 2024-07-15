@@ -15,17 +15,17 @@ spec:
               generators:
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: feature/mil
+                    revision: HEAD
                     files:
                       - path: "environments/**/env.values.yaml"
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: feature/mil
+                    revision: HEAD
                     files:
                       - path: "environments/**/engineering/test-api.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: feature/mil
+              revision: HEAD
               files:
                 - path: "environments/global.values.yaml"
   template:

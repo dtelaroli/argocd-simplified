@@ -7,7 +7,7 @@ permissions: write-all
 jobs:
   pr_comment:
     name: deploy pull-request
-    if: ${{ github.event.issue.pull_request }} && ${{ contains(github.event.comment.body, 'actions[deploy]') }}
+    if: ${{ github.event.issue.pull_request }} && ${{ contains(github.event.comment.body, '/actions deploy') }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master

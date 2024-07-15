@@ -15,17 +15,17 @@ spec:
               generators:
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: feature/mil
+                    revision: HEAD
                     files:
                       - path: "environments/**/env.values.yaml"
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: feature/mil
+                    revision: HEAD
                     files:
                       - path: "environments/**/platform/argo-rollouts.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: feature/mil
+              revision: HEAD
               files:
                 - path: "environments/global.values.yaml"
   template:
@@ -45,7 +45,7 @@ spec:
       syncPolicy:
         automated:
           selfHeal: false
-          prune: false  
+          prune: false
         syncOptions:
           - FailOnSharedResource=true
           - CreateNamespace=true

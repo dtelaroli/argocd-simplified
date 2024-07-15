@@ -135,7 +135,7 @@ O deploy de feature-branch é configurado no `deploy-pr.yml`.
 O processo inicia com um pull-request aberto e enviando uma mensagem com o texto abaixo:
 
 ```
-actions[deploy]
+/actions deploy
 ```
 
 O pipeline vai alterar os manifestos do arquivo yaml que configura o application do argocd. Após o argocd reconhecer a mudança e fazer o sync, o argo-rollouts entra em ação criando um novo rollout, que é um novo replicaset com pods em canary/blue-green para testes, antes de promover por completo a versão.
@@ -202,4 +202,18 @@ Para cada repositório que será utilizado é necessário executar o comando aba
 
 ```
 make add_repo
+```
+
+## Test apps
+
+### argocd
+
+```
+make local_argocd
+```
+
+### guestbook
+
+```
+make local_guestbook
 ```
