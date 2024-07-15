@@ -29,9 +29,13 @@ rancher_context: ## Initial installation of argocd and the app-of-apps
 add_repo: ## Add repo to the argocd
 	@bash ./scripts/bash/add-repo.sh
 
-.PHONY: forward
-forward: ## Port forward for argocd-server
-	@kubectl port-forward svc/argocd-server -n argocd 8888:443 
+.PHONY: local_argocd
+local_argocd: ## Port forward for argocd-server
+	@kubectl port-forward svc/argocd-server -n argocd 8888:443
+
+.PHONY: local_guestbook
+local_guestbook: ## Port forward for argocd-server
+	@kubectl port-forward svclocal_guestbook -n argocd 9999:9080 
 
 .PHONY: help
 help: ## Display help screen

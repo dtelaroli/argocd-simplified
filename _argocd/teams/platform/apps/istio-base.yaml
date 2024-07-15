@@ -38,7 +38,7 @@ spec:
       source:
         repoURL: https://istio-release.storage.googleapis.com/charts
         chart: base 
-        targetRevision: '{{ .istioVersion }}'
+        targetRevision: '{{ .revisions.istio }}'
         helm:
           version: v3
       destination:
