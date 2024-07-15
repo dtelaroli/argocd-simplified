@@ -15,17 +15,17 @@ spec:
               generators:
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: HEAD
+                    revision: feature/mil
                     files:
                       - path: "environments/**/env.values.yaml"
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: HEAD
+                    revision: feature/mil
                     files:
                       - path: "environments/**/platform/istio-base.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: HEAD
+              revision: feature/mil
               files:
                 - path: "environments/global.values.yaml"
   template:
@@ -38,7 +38,7 @@ spec:
       source:
         repoURL: https://istio-release.storage.googleapis.com/charts
         chart: base 
-        targetRevision: '{{ .istioVersion }}'
+        targetRevision: '{{ .revisions.istio }}'
         helm:
           version: v3
       destination:

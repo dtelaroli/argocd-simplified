@@ -16,4 +16,4 @@ spec:
   # Only permit applications to deploy to the guestbook namespace in the same cluster
   destinations:
     - namespace: "dev"
-      name: "in-cluster"
+      name: "mil-hml"

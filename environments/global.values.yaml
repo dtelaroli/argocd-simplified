@@ -1,5 +1,7 @@
-revision: HEAD
-istioVersion: 1.22.0
+revisions: 
+  argoRollouts: feature/mil
+  istio: 1.22.0
+
 
 canary:
   targetRevision: HEAD

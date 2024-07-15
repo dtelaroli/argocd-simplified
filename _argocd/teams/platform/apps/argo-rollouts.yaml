@@ -15,21 +15,19 @@ spec:
               generators:
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: HEAD
+                    revision: feature/mil
                     files:
                       - path: "environments/**/env.values.yaml"
                 - git:
                     repoURL: https://github.com/dtelaroli/argocd-simplified.git
-                    revision: HEAD
+                    revision: feature/mil
                     files:
                       - path: "environments/**/platform/argo-rollouts.values.yaml"
           - git:
               repoURL: https://github.com/dtelaroli/argocd-simplified.git
-              revision: HEAD
+              revision: feature/mil
               files:
                 - path: "environments/global.values.yaml"
-    
-          
   template:
     metadata:
       name: "argo-rollouts-{{.env}}"
@@ -40,14 +38,14 @@ spec:
       source:
         repoURL: https://github.com/dtelaroli/argocd-simplified.git
         path: teams/platform/argo-rollouts
-        targetRevision: '{{ .revision | default "HEAD" }}'
+        targetRevision: '{{ .revisions.argoRollouts }}'
       destination:
         name: "{{ .clusterName }}"
         namespace: argo-rollouts
       syncPolicy:
         automated:
           selfHeal: false
-          prune: false
+          prune: false  
         syncOptions:
           - FailOnSharedResource=true
           - CreateNamespace=true
