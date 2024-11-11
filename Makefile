@@ -3,6 +3,7 @@ SHELL:=/bin/bash
 
 .PHONY: init
 init: ## Initial installation of argocd and the app-of-apps
+	@kubectl config use-context rancher-desktop
 	@kubectl create namespace argocd | true
 	@kubectl apply -n argocd -k ./teams/platform/argocd
 	sleep 1
