@@ -8,7 +8,7 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  application.instanceLabelKey: argocd.argoproj.io/instance
+  # application.instanceLabelKey: argocd.argoproj.io/instance
   statusbadge.enabled: "true"
   accounts.team-product: login
   accounts.provider-argocd: apiKey
